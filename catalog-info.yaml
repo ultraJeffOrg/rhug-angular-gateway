@@ -1,0 +1,69 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rhug-angular-rhug-angular-poi-gateway-app-dev
+  annotations:
+    argocd/app-name: rhug-angular-rhug-angular-poi-gateway-app-dev
+    backstage.io/kubernetes-id: rhug-angular-rhug-angular-poi-gateway-app-dev
+    backstage.io/kubernetes-namespace: rhug-angular
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=rhug-angular-rhug-angular-poi-gateway-app-dev'
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: ultraJeffOrg/rhug-angular-gateway
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.cluster-gqd95.gqd95.sandbox1540.opentlc.com/dev-pipelines/ns/rhug-angular/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.cluster-gqd95.gqd95.sandbox1540.opentlc.com/k8s/ns/rhug-angular/deployments/rhug-angular-poi-gateway-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.cluster-gqd95.gqd95.sandbox1540.opentlc.com/#https://github.com/ultraJeffOrg/rhug-angular-gateway?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:default/ultrajeff"
+  system: workshop-system-rhug-angular
+  providesApis:
+    - gateway-api-rhug-angular
+  consumesApis:
+    - backend-api-rhug-angular
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-rhug-angular
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:default/ultrajeff"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: gateway-api-rhug-angular
+  description: API surface exposed to interact with Backends (summit POIs + parks data) via the Gateway
+  links:
+    - url: http://rhug-angular-poi-gateway-app-rhug-angular.apps.cluster-gqd95.gqd95.sandbox1540.opentlc.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/ultraJeffOrg/rhug-angular-gateway/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:default/ultrajeff"
+  system: workshop-system-rhug-angular
+  definition:
+    $text: https://github.com/ultraJeffOrg/rhug-angular-gateway/tree/main/src/main/resources/META-INF/openapi.yaml
